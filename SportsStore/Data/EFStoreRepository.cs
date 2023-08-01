@@ -11,6 +11,6 @@ namespace SportsStore.Data
             this.context = ctx;
         }
 
-        public IQueryable<Product> Products => throw new NotImplementedException();
+        public IQueryable<Product> Products => context.Products;
     }
 }
