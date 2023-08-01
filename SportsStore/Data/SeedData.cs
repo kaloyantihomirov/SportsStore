@@ -81,6 +81,8 @@ namespace SportsStore.Data
                     Price = 1200
                 }
                 );
+
+                context.SaveChangesAsync();
             }
         }
     }
