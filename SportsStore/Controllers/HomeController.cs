@@ -15,7 +15,7 @@ namespace SportsStore.Controllers
             this.repository = repo;
         }
 
-        public IActionResult Index(int productPage = 1)
+        public ViewResult Index(int productPage = 1)
         =>  View(new ProductsListViewModel
             {
                 Products = this.repository
