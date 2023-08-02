@@ -4,6 +4,9 @@
   "libraries": [
     {
       "library": "bootstrap@5.1.3",
+      "files": [
+        "css/bootstrap.min.css"
+      ],
       "destination": "wwwroot/lib/bootstrap"
     }
   ]
