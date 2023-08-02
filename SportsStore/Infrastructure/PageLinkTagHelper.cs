@@ -14,24 +14,31 @@ namespace SportsStore.Infrastructure
 
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
-            urlHelperFactory = helperFactory;
+            this.urlHelperFactory = helperFactory;
         }
 
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext? ViewContext { get; set; }
 
+
         public PagingInfo? PageModel { get; set; }
+
 
         public string? PageAction { get; set; }
 
+
         public bool PageClassesEnabled { get; set; } = false;
 
-        public string PageClass { get; set; } = String.Empty;
 
-        public string PageClassNormal { get; set; } = String.Empty;
+        public string PageClass { get; set; } = string.Empty;
 
-        public string PageClassSelected { get; set; } = String.Empty;
+
+        public string PageClassNormal { get; set; } = string.Empty;
+
+    
+        public string PageClassSelected { get; set; } = string.Empty;
+
 
         public override void Process(TagHelperContext context,
                 TagHelperOutput output)

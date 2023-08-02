@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using SportsStore.Models;
 
 namespace SportsStore.Data
@@ -82,7 +83,7 @@ namespace SportsStore.Data
                 }
                 );
 
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
     }
