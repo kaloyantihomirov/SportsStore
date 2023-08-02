@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 using SportsStore.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 //AddScoped method creates a service where each HTTP requests gets its own repository object
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 
+
+//ASP.NET Core receives HTTP requests and passes them along a request pipeline, which is populated with middleware components registered using the app property.
 var app = builder.Build();
 
 app.UseStaticFiles();
