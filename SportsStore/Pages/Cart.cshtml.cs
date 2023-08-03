@@ -37,5 +37,13 @@ namespace SportsStore.Pages
 
             return RedirectToPage(new { returnUrl = returnUrl });
         }
+
+        public IActionResult OnPostRemove(long productId, string returnUrl)
+        {
+            Cart.RemoveLine(Cart.Lines
+                .First(cl => cl.Product.ProductId == productId).Product);
+
+            return RedirectToPage(new { returnUrl = returnUrl });
+        }
     }
 }
