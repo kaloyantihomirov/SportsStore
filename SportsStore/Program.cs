@@ -14,6 +14,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 
 //AddScoped method creates a service where each HTTP requests gets its own repository object
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
 
 builder.Services.AddRazorPages();
 
