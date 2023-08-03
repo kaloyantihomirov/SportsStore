@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using SportsStore.Data;
+using SportsStore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
+builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
 //ASP.NET Core receives HTTP requests and passes them along a request pipeline, which is populated with middleware components registered using the app property.
