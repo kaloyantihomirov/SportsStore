@@ -89,5 +89,38 @@ namespace SportsStore.Tests
             Assert.Equal(5, pageInfo.TotalItems);
             Assert.Equal(2, pageInfo.TotalPages);
         }
+
+        [Fact]
+        public void Can_Filter_Products()
+        {
+            //Arange
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.Products)
+                .Returns(new Product[]
+                {
+                    new Product { ProductId = 1, Name = "P1", Category = "C1"},
+                    new Product { ProductId = 2, Name = "P2", Category = "C1"},
+                    new Product { ProductId = 3, Name = "P3", Category = "C2"},
+                    new Product { ProductId = 4, Name = "P4", Category = "C2"},
+                    new Product { ProductId = 5, Name = "P5", Category = "C2"},
+                    new Product { ProductId = 6, Name = "P6", Category = "C1"},
+                }.AsQueryable<Product>());
+
+            //Arrange
+            HomeController controller = new HomeController(mock.Object);
+
+            //Action
+            ProductsListViewModel result = controller
+                .Index("C1", 1).ViewData.Model as ProductsListViewModel ?? new();
+
+            Product[] prodArray = result.Products.ToArray();
+
+            //Assert
+            Assert.Equal(3, prodArray.Length);
+
+            Assert.True(prodArray[0].Name == "P1" && prodArray[0].Category == "C1");
+            Assert.True(prodArray[1].Name == "P2" && prodArray[1].Category == "C1");
+            Assert.True(prodArray[2].Name == "P6" && prodArray[0].Category == "C1");
+        }
     }
 }
