@@ -14,6 +14,8 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 //AddScoped method creates a service where each HTTP requests gets its own repository object
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 
+builder.Services.AddRazorPages();
+
 
 //ASP.NET Core receives HTTP requests and passes them along a request pipeline, which is populated with middleware components registered using the app property.
 var app = builder.Build();

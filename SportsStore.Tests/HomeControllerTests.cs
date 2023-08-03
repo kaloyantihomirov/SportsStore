@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SportsStore.Controllers;
 using SportsStore.Data;
 using SportsStore.Models;
@@ -121,6 +122,38 @@ namespace SportsStore.Tests
             Assert.True(prodArray[0].Name == "P1" && prodArray[0].Category == "C1");
             Assert.True(prodArray[1].Name == "P2" && prodArray[1].Category == "C1");
             Assert.True(prodArray[2].Name == "P6" && prodArray[0].Category == "C1");
+        }
+
+        [Fact]
+        public void Generate_Category_Specific_Product_Count()
+        {
+            // Arrange
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.Products).Returns((new Product[] {
+                new Product {ProductId = 1, Name = "P1", Category = "Cat1"},
+                new Product {ProductId = 2, Name = "P2", Category = "Cat2"},
+                new Product {ProductId = 3, Name = "P3", Category = "Cat1"},
+                new Product {ProductId = 4, Name = "P4", Category = "Cat2"},
+                new Product {ProductId = 5, Name = "P5", Category = "Cat3"}
+            }).AsQueryable<Product>());
+
+            HomeController target = new HomeController(mock.Object);
+            target.PageSize = 3;
+
+            Func<ViewResult, ProductsListViewModel?> GetModel = result
+                => result?.ViewData?.Model as ProductsListViewModel;
+
+            // Action
+            int? res1 = GetModel(target.Index("Cat1"))?.PagingInfo.TotalItems;
+            int? res2 = GetModel(target.Index("Cat2"))?.PagingInfo.TotalItems;
+            int? res3 = GetModel(target.Index("Cat3"))?.PagingInfo.TotalItems;
+            int? resAll = GetModel(target.Index(null))?.PagingInfo.TotalItems;
+
+            // Assert
+            Assert.Equal(2, res1);
+            Assert.Equal(2, res2);
+            Assert.Equal(1, res3);
+            Assert.Equal(5, resAll);
         }
     }
 }
